@@ -17,7 +17,7 @@ public class DirectionController {
     private final DirectionService directionService;
     private static final String DIRECTION_BASE_URL = "https://map.kakao.com/link/map/";
 
-    @GetMapping("/dir/{encodedId}")
+    @GetMapping("/dirBeforeUrl/{encodedId}")
     public String searchDirectionBeforeUrl(@PathVariable("encodedId") String encodedId) {
         Direction resultDirection = directionService.findById(encodedId);
 
