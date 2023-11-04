@@ -2,6 +2,7 @@ package com.practice.pharmacy.config
 
 import com.practice.pharmacy.AbstractIntegrationContainerBaseTest
 import spock.lang.Specification
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.HashOperations
 import org.springframework.data.redis.core.RedisTemplate
