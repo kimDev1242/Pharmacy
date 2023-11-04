@@ -8,6 +8,7 @@ import com.practice.pharmacy.pharmacy.service.PharmacySearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,6 +24,7 @@ public class DirectionService {
 
     private static final int MAX_SEARCH_COUNT = 3; // 약국 최대 검색 갯수
     private static final double RADIUS_KM = 10.0; // 반경 10 km
+    private static final String DIRECTION_BASE_URL = "https://map.kakao.com/link/map/";
 
     private final PharmacySearchService pharmacySearchService;
     private final DirectionRepository directionRepository;
@@ -38,6 +40,19 @@ public class DirectionService {
     public Direction findById(String encodedId) {
         Long decodedId = base62Service.decodeDirectionId(encodedId);
         return directionRepository.findById(decodedId).orElse(null);
+    }
+
+    public String findDirectionUrlById(String encodedId) {
+        Long decodedId = base62Service.decodeDirectionId(encodedId);
+        Direction direction = directionRepository.findById(decodedId).orElse(null);
+
+        String params = String.join(",", direction.getTargetPharmacyName(),
+                String.valueOf(direction.getTargetLatitude()), String.valueOf(direction.getTargetLongitude()));
+
+        String result = UriComponentsBuilder.fromHttpUrl(DIRECTION_BASE_URL + params)
+                .toUriString();
+
+        return result;
     }
 
     public List<Direction> buildDirectionList(DocumentDto documentDto) {
