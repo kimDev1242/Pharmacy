@@ -1,4 +1,4 @@
-package com.practice.pharmacy.config
+package com.practice.pharmacy.pharmacy.cache
 
 import com.practice.pharmacy.AbstractIntegrationContainerBaseTest
 import spock.lang.Specification
